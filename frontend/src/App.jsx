@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/homePage";
 import AllCourses from "./pages/Courses";
 import CourseInfo from "./pages/CourseInfo";
@@ -20,56 +20,36 @@ import EducatorCourseEdit from "./pages/dashboard/educator/pages/courses/edit";
 
 function App() {
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/courses" element={<AllCourses />}></Route>
-          <Route path="/courses/:courseId" element={<CourseInfo />}></Route>
+    <Routes>
+      {/* Public Pages */}
+      <Route path="/" element={<HomePage />} />
+      <Route path="/courses" element={<AllCourses />} />
+      <Route path="/courses/:courseId" element={<CourseInfo />} />
 
-          <Route path="/auth">
-            <Route path="login" element={<Login />}></Route>
-            <Route path="signup" element={<Signup />}></Route>
+      {/* Auth Pages */}
+      <Route path="/auth/login" element={<Login />} />
+      <Route path="/auth/signup" element={<Signup />} />
+
+      {/* User Dashboard */}
+      <Route path="/dashboard/user" element={<UserDashboard />}>
+        <Route path="profile" element={<UserProfile />} />
+        <Route path="updateProfile" element={<UpdateUserProfile />} />
+        <Route path="myCourses" element={<UserCourses />} />
+      </Route>
+
+      {/* Educator Dashboard */}
+      <Route path="/dashboard/educator" element={<EducatorDashboard />}>
+        <Route path="profile" element={<EducatorProfile />} />
+        <Route path="updateProfile" element={<UpdateEducatorProfile />} />
+        <Route path="myCourses" element={<EducatorCourses />}>
+          <Route path="info" element={<EducatorCourseInfo />}>
+            <Route path="lectures" element={<ManageEducatorLectures />} />
           </Route>
-          <Route path="/dashboard">
-            <Route path="user" element={<UserDashboard />}>
-              <Route path="profile" element={<UserProfile />}></Route>
-              <Route
-                path="updateProfile"
-                element={<UpdateUserProfile />}
-              ></Route>
-              <Route path="myCourses" element={<UserCourses />}></Route>
-            </Route>
-            <Route
-              path="educator"
-              element={<EducatorDashboard></EducatorDashboard>}
-            >
-              <Route path="profile" element={<EducatorProfile />}></Route>
-              <Route
-                path="updateProfile"
-                element={<UpdateEducatorProfile />}
-              ></Route>
-              <Route path="myCourses" element={<EducatorCourses />}>
-                <Route
-                  path="info"
-                  element={<EducatorCourseInfo></EducatorCourseInfo>}
-                >
-                  <Route
-                    path="lectures"
-                    element={<ManageEducatorLectures />}
-                  ></Route>
-                </Route>
-                <Route path="create" element={<EducatorCourseCreate />}></Route>
-                <Route
-                  path="edit/:courseId"
-                  element={<EducatorCourseEdit />}
-                ></Route>
-              </Route>
-            </Route>
-          </Route>
-        </Routes>
-      </Router>
-    </div>
+          <Route path="create" element={<EducatorCourseCreate />} />
+          <Route path="edit/:courseId" element={<EducatorCourseEdit />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
